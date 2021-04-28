@@ -15,14 +15,13 @@ public class BootStrapData implements CommandLineRunner{
 	
 	
 	public BootStrapData(AuthorRepository authorRepository, BookRepository bookRepository, PublisherRepository publisherRepository) {
-		super();
 		this.authorRepository = authorRepository;
 		this.bookRepository = bookRepository;
 		this.publisherRepository = publisherRepository;
 	}
 
 	@Override
-	public void run(String... args) throws Exception {
+	public void run(String... args) {
 		Author eric = new Author("J.K.", "Rowling");
 		Book harryPotter = new Book("Harry Potter y La piedra filosofal", "123123");
 		eric.getBook().add(harryPotter);
@@ -40,10 +39,10 @@ public class BootStrapData implements CommandLineRunner{
 		Author john = new Author("Frank", "Kafka");
 		Book silence = new Book("Metamorfosis", "123125");
 		silence.setPublisher(publicador);
-		john.getBook().add(silence);
 		silence.getAuthors().add(john);
 		publicador.getBooks().add(silence);
-		
+
+		john.getBook().add(silence);
 		authorRepository.save(john);
 		bookRepository.save(silence);
 		
