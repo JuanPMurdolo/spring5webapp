@@ -8,6 +8,7 @@ public class Publisher {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+
     private String name;
     private String address;
     private String city;
@@ -18,12 +19,7 @@ public class Publisher {
     @JoinColumn(name= "publisher_id")
     private Set<Book> books = new HashSet<>();
     
-	public Publisher(String name, String address, String city, String state, String zip) {
-		this.name = name;
-		this.address = address;
-		this.city = city;
-		this.state = state;
-		this.zip = zip;
+	public Publisher() {
 	}
 	
 	@Override

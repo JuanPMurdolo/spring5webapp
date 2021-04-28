@@ -21,31 +21,42 @@ public class BootStrapData implements CommandLineRunner{
 	}
 
 	@Override
-	public void run(String... args) {
+	public void run(String... args) throws Exception {
+		System.out.println("Started in Bootstrap");
+		Publisher publicador = new Publisher();
+		publicador.setAddress("123 calle falsa");
+		publicador.setCity("berisso");
+		publicador.setZip("1921");
+		publicador.setState("Buenos Aires");
+		publicador.setName("Surfeando");
+
+		System.out.println(publicador.toString());
+
 		Author eric = new Author("J.K.", "Rowling");
 		Book harryPotter = new Book("Harry Potter y La piedra filosofal", "123123");
+
 		eric.getBook().add(harryPotter);
 		harryPotter.getAuthors().add(eric);
-		Publisher publicador = new Publisher("Surfeando", "123 calle falsa", "berisso", "Buenos Aires", "1921");
-		
+
 		harryPotter.setPublisher(publicador);
 		publicador.getBooks().add(harryPotter);
-		
+
 		authorRepository.save(eric);
 		bookRepository.save(harryPotter);
 		publisherRepository.save(publicador);
 
-		
 		Author john = new Author("Frank", "Kafka");
 		Book silence = new Book("Metamorfosis", "123125");
-		silence.setPublisher(publicador);
+		john.getBook().add(silence);
 		silence.getAuthors().add(john);
+		silence.setPublisher(publicador);
 		publicador.getBooks().add(silence);
 
-		john.getBook().add(silence);
+
 		authorRepository.save(john);
 		bookRepository.save(silence);
-		
+		publisherRepository.save(publicador);
+
 		System.out.println("Boostrap");
 		System.out.println("Numero de libros" + bookRepository.count());
 		System.out.println("Numero de libros publicados por" + publicador.getName() + publisherRepository.count());
