@@ -11,11 +11,14 @@ public class BootStrapData implements CommandLineRunner{
 	
 	private final AuthorRepository authorRepository;
 	private final BookRepository bookRepository;
+	private final PublisherRepository publisherRepository;
 	
-	public BootStrapData(AuthorRepository authorRepository, BookRepository bookRepository) {
+	
+	public BootStrapData(AuthorRepository authorRepository, BookRepository bookRepository, PublisherRepository publisherRepository) {
 		super();
 		this.authorRepository = authorRepository;
 		this.bookRepository = bookRepository;
+		this.publisherRepository = publisherRepository;
 	}
 
 	@Override
@@ -27,21 +30,26 @@ public class BootStrapData implements CommandLineRunner{
 		Publisher publicador = new Publisher("Surfeando", "123 calle falsa", "berisso", "Buenos Aires", "1921");
 		
 		harryPotter.setPublisher(publicador);
+		publicador.getBooks().add(harryPotter);
 		
 		authorRepository.save(eric);
 		bookRepository.save(harryPotter);
+		publisherRepository.save(publicador);
+
 		
 		Author john = new Author("Frank", "Kafka");
 		Book silence = new Book("Metamorfosis", "123125");
 		silence.setPublisher(publicador);
 		john.getBook().add(silence);
 		silence.getAuthors().add(john);
+		publicador.getBooks().add(silence);
 		
 		authorRepository.save(john);
 		bookRepository.save(silence);
 		
 		System.out.println("Boostrap");
 		System.out.println("Numero de libros" + bookRepository.count());
+		System.out.println("Numero de libros publicados por" + publicador.getName() + publisherRepository.count());
 	}
 
 }
