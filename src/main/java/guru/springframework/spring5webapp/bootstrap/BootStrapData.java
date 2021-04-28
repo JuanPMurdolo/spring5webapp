@@ -24,12 +24,16 @@ public class BootStrapData implements CommandLineRunner{
 		Book harryPotter = new Book("Harry Potter y La piedra filosofal", "123123");
 		eric.getBook().add(harryPotter);
 		harryPotter.getAuthors().add(eric);
+		Publisher publicador = new Publisher("Surfeando", "123 calle falsa", "berisso", "Buenos Aires", "1921");
+		
+		harryPotter.setPublisher(publicador);
 		
 		authorRepository.save(eric);
 		bookRepository.save(harryPotter);
 		
 		Author john = new Author("Frank", "Kafka");
 		Book silence = new Book("Metamorfosis", "123125");
+		silence.setPublisher(publicador);
 		john.getBook().add(silence);
 		silence.getAuthors().add(john);
 		
