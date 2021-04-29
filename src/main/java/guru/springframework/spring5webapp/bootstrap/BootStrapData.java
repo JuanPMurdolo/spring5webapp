@@ -1,10 +1,13 @@
 package guru.springframework.spring5webapp.bootstrap;
 
+import guru.springframework.spring5webapp.domain.Author;
+import guru.springframework.spring5webapp.domain.Book;
+import guru.springframework.spring5webapp.domain.Publisher;
+import guru.springframework.spring5webapp.repositories.AuthorRepository;
+import guru.springframework.spring5webapp.repositories.BookRepository;
+import guru.springframework.spring5webapp.repositories.PublisherRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-
-import guru.springframework.spring5webapp.domain.*;
-import guru.springframework.spring5webapp.repositories.*;
 
 @Component
 public class BootStrapData implements CommandLineRunner{
@@ -22,6 +25,7 @@ public class BootStrapData implements CommandLineRunner{
 
 	@Override
 	public void run(String... args) throws Exception {
+
 		System.out.println("Started in Bootstrap");
 		Publisher publicador = new Publisher();
 		publicador.setAddress("123 calle falsa");
@@ -30,11 +34,10 @@ public class BootStrapData implements CommandLineRunner{
 		publicador.setState("Buenos Aires");
 		publicador.setName("Surfeando");
 
-		System.out.println(publicador.toString());
+		publisherRepository.save(publicador);
 
 		Author eric = new Author("J.K.", "Rowling");
 		Book harryPotter = new Book("Harry Potter y La piedra filosofal", "123123");
-
 		eric.getBook().add(harryPotter);
 		harryPotter.getAuthors().add(eric);
 
@@ -43,7 +46,6 @@ public class BootStrapData implements CommandLineRunner{
 
 		authorRepository.save(eric);
 		bookRepository.save(harryPotter);
-		publisherRepository.save(publicador);
 
 		Author john = new Author("Frank", "Kafka");
 		Book silence = new Book("Metamorfosis", "123125");
@@ -52,14 +54,13 @@ public class BootStrapData implements CommandLineRunner{
 		silence.setPublisher(publicador);
 		publicador.getBooks().add(silence);
 
-
 		authorRepository.save(john);
 		bookRepository.save(silence);
 		publisherRepository.save(publicador);
 
 		System.out.println("Boostrap");
-		System.out.println("Numero de libros" + bookRepository.count());
-		System.out.println("Numero de libros publicados por" + publicador.getName() + publisherRepository.count());
+		System.out.println("Numero de libros: " + bookRepository.count());
+		System.out.println("Numero de libros publicados por" + " " + publicador.getName() + ": " + publisherRepository.count());
 	}
 
 }
